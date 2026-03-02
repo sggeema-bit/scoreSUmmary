@@ -46,25 +46,10 @@ result = analyze_innings(
 )
 print(result)
 
-# Output:
+# Output (formatted):
 # {
-#     "innings": {
-#         "input": {
-#             "runs": 50,
-#             "balls": 40,
-#             "fours": 3,
-#             "sixes": 1
-#         },
-#         "metrics": {
-#             "strike_rate": 125.0,
-#             "boundary_percentage": 20.0,
-#             "balls_per_boundary": 10.0
-#         }
-#     },
-#     "metadata": {
-#         "generated_at": "2026-03-02T14:30:00Z",
-#         "valid": true
-#     }
+#   "input": {"runs": 50, "balls": 40, "fours": 3, "sixes": 1},
+#   "metrics": {"strike_rate": 125.0, "boundary_percentage": 36.0, "balls_per_boundary": 10.0}
 # }
 ```
 
@@ -73,7 +58,6 @@ print(result)
 ```python
 from batting_metrics import analyze_innings
 
-# Get human-readable text summary
 summary = analyze_innings(
     runs=75,
     balls=60,
@@ -83,29 +67,25 @@ summary = analyze_innings(
 )
 print(summary)
 
-# Output:
-# ═══════════════════════════════════════════════
+# Example output (truncated):
+# ═══════════════════════════════════════════════════════
 #        BATTING METRICS SUMMARY
-# ═══════════════════════════════════════════════
-# 
+# ═══════════════════════════════════════════════════════
+#
 # INPUT STATISTICS
-# ────────────────────────────────────────────
-#   Runs Scored:                    75
-#   Balls Faced:                    60
-#   Four-Run Boundaries:             4
-#   Six-Run Boundaries:              2
-# 
+# ──────────────────────────────────────────────────────
+#   Runs Scored:               75
+#   Balls Faced:               60
+#   Four-Run Boundaries:       4
+#   Six-Run Boundaries:        2
+#
 # COMPUTED METRICS
-# ────────────────────────────────────────────
-#   Strike Rate:                   125.0 (runs per 100 balls)
-#   Boundary Percentage:            26.67% (runs from boundaries)
-#   Balls Per Boundary:             10.0 (avg balls per boundary)
-# 
-# ═══════════════════════════════════════════════
-#   Generated: 2026-03-02 14:30:00 UTC
-# ═══════════════════════════════════════════════
+# ──────────────────────────────────────────────────────
+#   Strike Rate:              125.00 (runs per 100 balls)
+#   Boundary Percentage:       26.67%
+#   Balls Per Boundary:        10.00
+# ═══════════════════════════════════════════════════════
 ```
-
 ### Command-Line Interface (CLI)
 
 ```bash

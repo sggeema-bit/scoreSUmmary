@@ -1,6 +1,6 @@
 """State models for batting metrics analysis."""
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, model_validator
 from typing import Optional
 
 
@@ -18,15 +18,14 @@ class InningsInput(BaseModel):
             raise ValueError("balls must be greater than 0 to calculate strike rate")
         return v
 
-    @validator("fours", "sixes", always=True)
-    def validate_boundaries_sum(cls, v, values):
-        fours_val = values.get("fours", 0)
-        sixes_val = values.get("sixes", 0)
+    @model_validator(mode="after")
+    def check_boundaries(cls, values):
+        # after validation ensures individual fields are already validated
+        fours_val = values.fours or 0
+        sixes_val = values.sixes or 0
         if fours_val + sixes_val == 0:
-            raise ValueError(
-                "Must have at least one boundary (four or six) to compute metrics"
-            )
-        return v
+            raise ValueError("Must have at least one boundary (four or six) to compute metrics")
+        return values
 
 
 class InningsMetrics(BaseModel):
@@ -45,7 +44,9 @@ class InningsState(BaseModel):
 
     @classmethod
     def create_and_compute(cls, runs: int, balls: int, fours: int, sixes: int) -> "InningsState":
-        """Validate inputs and compute metrics. Placeholder until computation logic added."""
+        """Validate inputs and compute metrics, returning full state."""
         input_data = InningsInput(runs=runs, balls=balls, fours=fours, sixes=sixes)
-        # metrics will be added later
-        return cls(input=input_data)
+        from .metrics_compute import compute_metrics
+
+        metrics = compute_metrics(input_data)
+        return cls(input=input_data, metrics=metrics)
