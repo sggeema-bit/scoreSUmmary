@@ -1,0 +1,23 @@
+[project]
+name = "batting_metrics"
+version = "0.1.0"
+description = "Cricket batting metrics analysis library"
+authors = [{name = "ScoreSummary"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=0.1.0",
+    "pydantic>=2.0"
+]
+
+[project.scripts]
+batting_metrics = "src.cli:main"
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "C90"]
+ignore = []
+
+[tool.black]
+line-length = 88
